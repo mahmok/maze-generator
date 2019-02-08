@@ -1,0 +1,135 @@
+<!-- 
+    Author: Mahmoud Mokhtar
+    Email: mahmok@gmail.com
+-->
+<html>
+    <head>
+        <title>Maze Generator</title>
+        <style>
+                *
+                {
+                    font-family:Arial, Helvetica, sans-serif;
+                    padding: 0;
+                    margin: 0;
+                }
+                canvas {
+                    display: block;
+                    outline: none;
+                    border: 0px none black;
+                    padding: 5px;
+                    margin: 0px auto;
+                }
+            
+                .center
+                {
+                    text-align: center;
+                    margin: 0px auto;
+                }
+            
+                .blue-cell
+                {
+                    color: #3363FF;
+                    font-weight: bolder;
+                }
+            
+                .green-cell
+                {
+                    color: #33FF7C;
+                    font-weight: bolder;
+                }
+            
+                .aqua-cell
+                {
+                    color: #33F1FF;
+                    font-weight: bolder;
+                }
+            
+                button
+                {
+                    padding: 10px;
+                    background-color: #3363FF;
+                    color: white;
+                    border: 1px solid #3363FF;
+                    border-radius: 10px;
+                }
+            
+                button:hover
+                {
+                    cursor: pointer;
+                }
+            
+            
+            </style>
+    </head>
+    <body>
+        <div class="center">
+            <div class="center">
+                <h2>Maze Generator</h2>
+                <h5>This maze generator uses recursive backtracker and depth-first search algorithms. <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Depth-first_search">Click here to view the algorithm's psuedo code.</a></h5>
+                <h5>You can select debug mode to see the algorithm in action.</h5>
+                <br>
+                <h5>The <u class="aqua-cell">aqua</u> cell is the cell in which the algorithm is checking it's neighbors (current cell).</h5>
+                <h5>The <u class="green-cell">green</u> cells are the ones that are visited and popped out of the stack.</h5>
+                <h5>The <u class="blue-cell">blue</u> cells are the ones that are pushed to the stack.</h5>
+                <br>
+
+                <label for="debug">Debug Mode:</label>
+                <select onchange="stop()" id="debug" name="debug">
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                </select>
+
+                <label for="size">Maze Size:</label>
+                <select onchange="stop()" id="size" name="size">
+                    <option value="60">Small</option>
+                    <option value="30">Medium</option>
+                    <option value="20">Large</option>
+                    <option value="10">Extra Large</option>
+                </select>
+
+                <label for="rate">Frame Rate:</label>
+                <input type="number" value="0.1" min="0.00001" step="0.1" id="rate" for="rate">
+                
+                <br>
+                <br>
+
+                <button onclick="generateMaze()">Generate Maze</button>
+                <button onclick="printMaze()">Print Maze</button>
+
+            </div>
+            <canvas id="canvas" height="600" width="600"></canvas>
+
+        </div>
+    </body>
+    <script src="cell.js"></script>
+    <script src="main.js"></script>
+    <script>
+        
+        function generateMaze()
+        {
+            var debugMode = document.getElementById("debug").value;
+            var cellWidth = document.getElementById("size").value;
+            var rate = document.getElementById("rate").value;
+            //console.log(debugMode, cellWidth, rate);
+
+            init(debugMode, cellWidth, rate);
+        }
+        
+        function stop()
+        {
+            clearInterval(GAME_LOOP);
+        }
+
+        function printMaze()
+        {
+            image = CANVAS.toDataURL("image/png", 1.0);
+            var link = document.createElement('a');
+            link.download = "maze.png";
+            link.href = image;
+            link.click();
+        }
+
+        init(1, 60, 0.1);
+    
+    </script>
+</html>
